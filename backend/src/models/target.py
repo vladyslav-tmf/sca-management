@@ -5,7 +5,6 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
 
 from db.base import Base
-from models.mission import Mission
 
 
 class Target(Base):
@@ -31,7 +30,7 @@ class Target(Base):
     )
 
     # Relationships
-    mission: Mapped[Mission] = relationship(
+    mission: Mapped["Mission"] = relationship(
         argument="Mission",
         back_populates="targets"
     )

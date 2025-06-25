@@ -1,11 +1,11 @@
 from datetime import datetime
 from decimal import Decimal
 
+from sqlalchemy import DECIMAL
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
 
 from db.base import Base
-from models.mission import Mission
 
 
 class Cat(Base):
@@ -17,7 +17,7 @@ class Cat(Base):
     name: Mapped[str] = mapped_column(index=True)
     years_of_experience: Mapped[int]
     breed: Mapped[str] = mapped_column(index=True)
-    salary: Mapped[Decimal] = mapped_column(scale=2)
+    salary: Mapped[Decimal] = mapped_column(DECIMAL(precision=10, scale=2))
     created_at: Mapped[datetime] = mapped_column(default=func.now())
     updated_at: Mapped[datetime] = mapped_column(
         default=func.now(),
@@ -25,7 +25,7 @@ class Cat(Base):
     )
 
     # Relationships
-    missions: Mapped[list[Mission]] = relationship(
+    missions: Mapped[list["Mission"]] = relationship(
         argument="Mission",
         back_populates="cat",
         cascade="all, delete-orphan"

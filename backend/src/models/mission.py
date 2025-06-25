@@ -1,12 +1,11 @@
 from datetime import datetime
+from typing import Optional
 
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
 
 from db.base import Base
-from models.cat import Cat
-from models.target import Target
 
 
 class Mission(Base):
@@ -29,11 +28,11 @@ class Mission(Base):
     )
 
     # Relationships
-    cat: Mapped[Cat | None] = relationship(
+    cat: Mapped[Optional["Cat"]] = relationship(
         argument="Cat",
         back_populates="missions"
     )
-    targets: Mapped[list[Target]] = relationship(
+    targets: Mapped[list["Target"]] = relationship(
         argument="Target",
         back_populates="mission",
         cascade="all, delete-orphan"
