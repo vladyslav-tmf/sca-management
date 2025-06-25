@@ -7,6 +7,7 @@ from loguru import logger
 
 from core.config import settings
 from db.session import engine
+from routers import cat_router, mission_router, target_router
 
 
 @asynccontextmanager
@@ -25,6 +26,10 @@ app: FastAPI = FastAPI(
     debug=settings.debug,
     lifespan=lifespan,
 )
+
+app.include_router(router=cat_router, prefix=settings.api_prefix)
+app.include_router(router=mission_router, prefix=settings.api_prefix)
+app.include_router(router=target_router, prefix=settings.api_prefix)
 
 
 @app.get("/", include_in_schema=False)
